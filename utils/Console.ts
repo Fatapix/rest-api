@@ -10,6 +10,7 @@ export enum Type {
 }
 
 export default class Console {
+
     public _name: string
 
     constructor(name?: string) {
@@ -40,41 +41,45 @@ export default class Console {
     }
 
     public log(type: Type, content: string) {
-        console.log(this.colorContent(type, content))
+        console.log(this._name, this.colorContent(type, content))
     }
 
-    public startLoader(type:Type, content: string) {
+    public startLoader(type:Type, content: string, func?: Function) {
+
+        // console.log(func)
+        this.log(type, content)
+
         let bar = new loader.Bar({
-            format: this._name +' '+ this.colorContent(type, content) +' |'+ colors.cyan('{bar}') +'| {percentage}% || Speed: {speed}',
+            format: this._name +' |'+ colors.cyan('{bar}') +'| {percentage}% || {value}/{total} Tasks',
             barCompleteChar: '\u2588',
             barIncompleteChar: '\u2591',
             hideCursor: true
         })
 
-        bar.start(200, 0, {
+        // 20 number tasks
+        bar.start(20, 0, {
             speed: "N/A"
-        });
+        })
 
-        var value = 0;
+        var value = 0
 
         var speedData = [];
 
         var timer = setInterval(function(){
-            value++;
+            value++
 
-            speedData.push(Math.random()*2+5);
-            var currentSpeedData = speedData.splice(-10);
+            speedData.push(Math.random()*2+5)
+            var currentSpeedData = speedData.splice(-10)
 
             bar.update(value, {
                 speed: (currentSpeedData.reduce(function(a, b) { return a + b; }, 0) / currentSpeedData.length).toFixed(2) + "Mb/s"
             });
 
             if (value >= bar.getTotal()){
-                clearInterval(timer);
+                clearInterval(timer)
 
-                bar.stop();
+                bar.stop()
             }
-        }, 20);
+        }, 20)
     }
-
 }

@@ -6,7 +6,7 @@ import * as colors from 'colors'
 import config from '../config-api'
 import configColors from '../utils/config-colors'
 
-import Console, { Type } from '../utils/Console'
+import Console, { Type } from '../utils/console'
 
 class Server {
 
@@ -23,15 +23,20 @@ class Server {
 
         // DEBUG for use info, warn... // gray, red...
         // colors.setTheme(configColors)
-
-        this.startServer()
-    
     }
 
-    private startServer() {
+    public start() {
         // this.console.startLoader(Type.info, 'Server is loading...', () => {
-        //   Instructions
-        //   If end load stop loader         
+        //     // this.app.get('/', (req: Request, res: Response) => {
+        //     //     res.send('Return content app.')
+        //     // })
+    
+        //     // this.app.listen(this._port, () => {
+        //     //     console.clear()
+        //     //     //this.console.startLoader(Type.info, 'Server is loading...')
+        //     //     this.console.log(Type.success, `Server start at https://192.168.7.178:${this._port}`)
+        //     // })
+
         // })
 
         this.app.get('/', (req: Request, res: Response) => {
@@ -39,10 +44,14 @@ class Server {
         })
 
         this.app.listen(this._port, () => {
-            this.console.startLoader(Type.info, 'Server is loading...')
+            //this.console.startLoader(Type.success, 'Server is starting...')
+            console.clear()
             this.console.log(Type.success, `Server start at https://192.168.7.178:${this._port}`)
         })
+
+
     }
 }
 
-new Server('rest-api')
+let server = new Server('rest-api')
+server.start()
