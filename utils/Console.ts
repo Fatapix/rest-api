@@ -17,7 +17,7 @@ export default class Console {
         this._name = '['+ colors.cyan('server@') + colors.magenta((name || 'api')) +']'
     }
 
-    private colorContent(type: Type, content: string) {
+    public colorContent(type: Type, content: string) {
         let arrContent = content.split(' ')
         
         for(let i = 0; i < arrContent.length; i++) {
@@ -46,7 +46,7 @@ export default class Console {
 
     public startLoader(type:Type, content: string, func?: Function) {
 
-        // console.log(func)
+        console.log(func)
         this.log(type, content)
 
         let bar = new loader.Bar({
